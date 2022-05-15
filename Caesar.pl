@@ -132,3 +132,12 @@ string2code([],[]).
 string2code([H1|T1],[H2|T2]):-
     code(H1,H2),
     string2code(T1,T2).
+
+sum3([],[]).
+sum3([H1|T1],[H2|T2]):-
+    H2 is (H1 + 3),
+    sum3(T1,T2).
+
+
+
+
