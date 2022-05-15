@@ -10,7 +10,7 @@ palavra('mola').
 palavra('varejo').
 palavra('hospital').
 palavra('motel').
-palavra('diário').
+palavra('diario').
 palavra('foto').
 palavra('aderir'). 
 palavra('teste').
@@ -135,8 +135,15 @@ string2code([H1|T1],[H2|T2]):-
 
 sum3([],[]).
 sum3([H1|T1],[H2|T2]):-
-    H2 is (H1 + 3),
+    string2code([H1|T1],[H3|T3]),
+    H2 is (H3 + 3),
     sum3(T1,T2).
+
+conversion([],[]).
+conversion([H1|T1],[H2|T2]):-
+    sum3([H1|T1],[H3|T3]),
+    code(H2,H3),
+    conversion(T1,T2).
 
 
 
