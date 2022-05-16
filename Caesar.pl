@@ -128,6 +128,13 @@ code('y',25).
 code('z',26).
 
 
+string_to_list_of_characters(String, Characters) :-
+    name(String, Xs),
+    maplist( number_to_character,
+    Xs, Characters ).
+
+number_to_character(Number, Character) :-
+    name(Character, [Number]).
 
 string2code([],[]).
 string2code([H1|T1],[H2|T2]):-
@@ -157,6 +164,8 @@ desconversion([H1|T1],[H2|T2]):-
     sub3([H1|T1],[H3|T3]),
     code(H2,H3),
     desconversion(T1,T2).
+
+
 
 
 
