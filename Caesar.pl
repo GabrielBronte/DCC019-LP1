@@ -128,6 +128,7 @@ code('y',25).
 code('z',26).
 
 
+
 string2code([],[]).
 string2code([H1|T1],[H2|T2]):-
     code(H1,H2),
@@ -139,11 +140,23 @@ sum3([H1|T1],[H2|T2]):-
     H2 is (H3 + 3),
     sum3(T1,T2).
 
+sub3([],[]).
+sub3([H1|T1],[H2|T2]):-
+    string2code([H1|T1],[H3|T3]),
+    H2 is (H3 - 3),
+    sub3(T1,T2).
+
 conversion([],[]).
 conversion([H1|T1],[H2|T2]):-
     sum3([H1|T1],[H3|T3]),
     code(H2,H3),
     conversion(T1,T2).
+
+desconversion([],[]).
+desconversion([H1|T1],[H2|T2]):-
+    sub3([H1|T1],[H3|T3]),
+    code(H2,H3),
+    desconversion(T1,T2).
 
 
 
