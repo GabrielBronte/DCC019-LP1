@@ -166,7 +166,10 @@ desconversion([H1|T1],[H2|T2]):-
     desconversion(T1,T2).
 
 
+conditionMore(A,X):- 
+    A>23,
+    X is (A-26 + 3).
 
-
-
-
+conditionLess(A,X):- 
+    A<3,
+    X is (A+26 - 3).
