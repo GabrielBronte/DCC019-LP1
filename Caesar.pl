@@ -141,30 +141,18 @@ string2code([H1|T1],[H2|T2]):-
     code(H1,H2),
     string2code(T1,T2).
 
-sum3([],[]).
-sum3([H1|T1],[H2|T2]):-
+sum3(Code,[],[]).
+sum3(Code,[H1|T1],[H2|T2]):-
     string2code([H1|T1],[H3|T3]),
-    H2 is (H3 + 3),
-    sum3(T1,T2).
+    H2 is mod(H3+Code,26),
+    sum3(Code,T1,T2).
 
-sub3([],[]).
-sub3([H1|T1],[H2|T2]):-
-    string2code([H1|T1],[H3|T3]),
-    H2 is (H3 - 3),
-    sub3(T1,T2).
-
-conversion([],[]).
-conversion([H1|T1],[H2|T2]):-
-    sum3([H1|T1],[H3|T3]),
+conversion(Code,[],[]).
+conversion(Code,[H1|T1],[H2|T2]):-
+    sum3(Code, [H1|T1],[H3|T3]),
     code(H2,H3),
-    conversion(T1,T2).
+    conversion(Code,T1,T2).
 
-desconversion([],[]).
-desconversion([H1|T1],[H2|T2]):-
-    sub3([H1|T1],[H3|T3]),
-    code(H2,H3),
-    desconversion(T1,T2).
-
-
-total_conversion(String,Converted):-
-    string_to_list_of_characters(String,X),conversion(X,Converted).
+caesar(String,Char,R):-
+    string_to_list_of_characters(String,X),code(Char,Code),
+    conversion(Code,X,Y), atomics_to_string(Y,R).
