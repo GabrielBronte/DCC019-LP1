@@ -147,24 +147,26 @@ sum3(Code,[H1|T1],[H2|T2]):-
     H2 is mod(H3+Code,26),
     sum3(Code,T1,T2).
 
-conversion(Code,[],[]).
-conversion(Code,[H1|T1],[H2|T2]):-
+conversion([],C,[],[]).
+conversion([KH1|KT1],C,[],[]).
+
+conversion([],C,[H1|T1],[H2|T2]):-
+    conversion(C,C,[H1|T1],[H2|T2]).
+
+conversion([KH1|KT1],C,[H1|T1],[H2|T2]):-
+    code(KH1,Code),
     sum3(Code, [H1|T1],[H3|T3]),
     code(H2,H3),
-    conversion(Code,T1,T2).
-
-caesar(String,Char,R):-
-    string_to_list_of_characters(String,X),code(Char,Code),
-    conversion(Code,X,Y), atomics_to_string(Y,R).
+    conversion(KT1,C,T1,T2).
 
 
-list_length([], 0 ).
-list_length([_|Xs] , L ) :- list_length(Xs,N) , L is N+1 .
 
+conversion([KH1|KT1],[H1|T1],[H2|T2]):-
+    code(KH1,Code),
+    sum3(Code, [H1|T1],[H3|T3]),
+    code(H2,H3),
+    conversion(KT1,T1,T2).
 
-extend_list(Number,[],[]).
-extend_list(0,[H1|T1],[H2|T2]).
-extend_list(Number,[H1|T1],[H2|T2]):-
-    string2code([H1|T1],[H3|T3]),
-    H2 is mod(H3+Code,26),
-    sum3(Code,T1,T2).
+vigenere(String,Key,R):-
+    string_to_list_of_characters(String,X),string_to_list_of_characters(Key,K),
+    conversion(K,K,X,Y), atomics_to_string(Y,R).
