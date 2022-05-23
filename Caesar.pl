@@ -239,25 +239,25 @@ conversion(Code,[H1|T1],[H2|T2]):-
     code(H2,H3),
     conversion(Code,T1,T2).
 
+deconversion(Code,[],[]).
+deconversion(Code,[H1|T1],[H2|T2]):-
+    sub_char_code(Code, [H1|T1],[H3|T3]),
+    code(H2,H3),
+    deconversion(Code,T1,T2).
+
 encoding(String,Char,R):-
     string_to_list_of_characters(String,X),code(Char,Code),
     conversion(Code,X,Y), atomics_to_string(Y,R).
+
+decoding(String,Char,R):-
+    string_to_list_of_characters(R,X),code(Char,Code),
+    deconversion(Code,X,Y), atomics_to_string(Y,String).
 
 sub_char_code(Code,[],[]).
 sub_char_code(Code,[H1|T1],[H2|T2]):-
     string2code([H1|T1],[H3|T3]),
     H2 is mod(H3-Code,102),
     sub_char_code(Code,T1,T2).
-
-decoding(String,Char,R):-
-    string_to_list_of_characters(R,X),code(Char,Code),
-    desconversion(Code,X,Y), atomics_to_string(Y,String).
-
-desconversion(Code,[],[]).
-desconversion(Code,[H1|T1],[H2|T2]):-
-    sub_char_code(Code, [H1|T1],[H3|T3]),
-    code(H2,H3),
-    desconversion(Code,T1,T2).
 
 caesar(X,Char,T):-
     nonvar(X),

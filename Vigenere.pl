@@ -100,6 +100,7 @@ palavra('luz').
 palavra('jubilado').
 
 
+code(' ',0).
 code('a',1).
 code('b',2).
 code('c',3).
@@ -127,6 +128,92 @@ code('x',24).
 code('y',25).
 code('z',26).
 
+code('A',27).
+code('B',28).
+code('C',29).
+code('D',30).
+code('E',31).
+code('F',32).
+code('G',33).
+code('H',34).
+code('I',35).
+code('J',36).
+code('K',37).
+code('L',38).
+code('M',39).
+code('N',40).
+code('O',41).
+code('P',42).
+code('Q',43).
+code('R',44).
+code('S',45).
+code('T',46).
+code('U',47).
+code('V',48).
+code('W',49).
+code('X',50).
+code('Y',51).
+code('Z',52).
+
+code('!',53).
+code('?',54).
+code('.',55).
+code(',',56).
+code(';',57).
+code(':',58).
+code('(',59).
+code(')',60).
+code('{',61).
+code('}',62).
+code('[',63).
+code(']',64).
+
+code('/',65).
+code('*',66).
+code('-',67).
+code('+',68).
+code('=',69).
+
+code('_',70).
+code('&',71).
+code('¨',72).
+
+code('%',73).
+code('$',74).
+code('#',75).
+code('@',76).
+code('"',77).
+code("'",78).
+
+code('^',79).
+code('~',80).
+code('`',81).
+code('º',82).
+code('ª',83).
+
+code('à',84).
+code('á',85).
+code('ã',86).
+code('â',87).
+
+code('è',88).
+code('é',89).
+code('ẽ',90).
+code('ê',91).
+
+code('ì',92).
+code('í',93).
+code('î',94).
+
+code('ò',95).
+code('ó',96).
+code('õ',97).
+code('ô',98).
+
+code('ù',99).
+code('ú',100).
+code('û',101).
+
 
 string_to_list_of_characters(String, Characters) :-
     name(String, Xs),
@@ -141,11 +228,17 @@ string2code([H1|T1],[H2|T2]):-
     code(H1,H2),
     string2code(T1,T2).
 
-sum3(Code,[],[]).
-sum3(Code,[H1|T1],[H2|T2]):-
+sum_char_code(Code,[],[]).
+sum_char_code(Code,[H1|T1],[H2|T2]):-
     string2code([H1|T1],[H3|T3]),
-    H2 is mod(H3+Code,26),
-    sum3(Code,T1,T2).
+    H2 is mod(H3+Code,102),
+    sum_char_code(Code,T1,T2).
+
+sub_char_code(Code,[],[]).
+sub_char_code(Code,[H1|T1],[H2|T2]):-
+    string2code([H1|T1],[H3|T3]),
+    H2 is mod(H3-Code,102),
+    sub_char_code(Code,T1,T2).
 
 conversion([],C,[],[]).
 conversion([KH1|KT1],C,[],[]).
@@ -155,18 +248,34 @@ conversion([],C,[H1|T1],[H2|T2]):-
 
 conversion([KH1|KT1],C,[H1|T1],[H2|T2]):-
     code(KH1,Code),
-    sum3(Code, [H1|T1],[H3|T3]),
+    sum_char_code(Code, [H1|T1],[H3|T3]),
     code(H2,H3),
     conversion(KT1,C,T1,T2).
 
+deconversion([],C,[],[]).
+deconversion([KH1|KT1],C,[],[]).
 
+deconversion([],C,[H1|T1],[H2|T2]):-
+    deconversion(C,C,[H1|T1],[H2|T2]).
 
-conversion([KH1|KT1],[H1|T1],[H2|T2]):-
+deconversion([KH1|KT1],C,[H1|T1],[H2|T2]):-
     code(KH1,Code),
-    sum3(Code, [H1|T1],[H3|T3]),
+    sub_char_code(Code, [H1|T1],[H3|T3]),
     code(H2,H3),
-    conversion(KT1,T1,T2).
+    deconversion(KT1,C,T1,T2).
 
-vigenere(String,Key,R):-
+
+encoding(String,Key,R):-
     string_to_list_of_characters(String,X),string_to_list_of_characters(Key,K),
     conversion(K,K,X,Y), atomics_to_string(Y,R).
+
+
+decoding(String,Key,R):-
+    string_to_list_of_characters(R,X),string_to_list_of_characters(Key,K),
+    deconversion(K,K,X,Y), atomics_to_string(Y,String).
+
+
+vigenere(X,Key,T):-
+    nonvar(X),
+    encoding(X,Key,T),!;
+    decoding(X,Key,T).
