@@ -1,103 +1,103 @@
-palavra('presunto').
-palavra('sobre').
-palavra('sul').
-palavra('fio').
-palavra('carrapato').
-palavra('molde').
-palavra('pulsar').
-palavra('golfinho').
-palavra('mola').
-palavra('varejo').
-palavra('hospital').
-palavra('motel').
-palavra('diario').
-palavra('foto').
-palavra('aderir'). 
-palavra('teste').
-palavra('surpresa').
-palavra('flamenco').
-palavra('laringe').
-palavra('discar').
-palavra('aperitivo').
-palavra('cumprimentar').
-palavra('anestesia').
-palavra('bateria').
-palavra('torre').
-palavra('cesta').
-palavra('aguaceiro').
-palavra('motor').
-palavra('dezembro').
-palavra('pasta').
-palavra('radiante').
-palavra('mascarar').
-palavra('computador').
-palavra('dinheiro').
-palavra('recipiente').
-palavra('flutuador').
-palavra('defesa').
-palavra('trabalho').
-palavra('fuga').
-palavra('lugar').
-palavra('magro').
-palavra('concha').
-palavra('sempre').
-palavra('asno').
-palavra('borboleta').
-palavra('pia').
-palavra('lago').
-palavra('atual').
-palavra('infantil').
-palavra('data').
-palavra('pilha').
-palavra('cachos').
-palavra('parente').
-palavra('bater').
-palavra('aposta').
-palavra('oceano').
-palavra('cadeado').
-palavra('flores').
-palavra('chuva').
-palavra('boca').
-palavra('temporada').
-palavra('para').
-palavra('de').
-palavra('com').
-palavra('eu').
-palavra('tu').
-palavra('topo').
-palavra('subir').
-palavra('radical').
-palavra('flauta').
-palavra('hipnotizar').
-palavra('fechado').
-palavra('conflito').
-palavra('gordura').
-palavra('nota').
-palavra('gaiola').
-palavra('selo').
-palavra('liberdade').
-palavra('pico').
-palavra('manteiga').
-palavra('custo').
-palavra('carro').
-palavra('futebol').
-palavra('pulso').
-palavra('filho').
-palavra('jarra').
-palavra('aparar').
-palavra('limpo').
-palavra('antena').
-palavra('cliente').
-palavra('corpo').
-palavra('popular').
-palavra('tela').
-palavra('limpo').
-palavra('teclado').
-palavra('tijolo').
-palavra('chifre').
-palavra('caderno').
-palavra('luz').
-palavra('jubilado').
+palavra("presunto").
+palavra("sobre").
+palavra("sul").
+palavra("fio").
+palavra("carrapato").
+palavra("molde").
+palavra("pulsar").
+palavra("golfinho").
+palavra("mola").
+palavra("varejo").
+palavra("hospital").
+palavra("motel").
+palavra("diario").
+palavra("foto").
+palavra("aderir"). 
+palavra("teste").
+palavra("surpresa").
+palavra("flamenco").
+palavra("laringe").
+palavra("discar").
+palavra("aperitivo").
+palavra("cumprimentar").
+palavra("anestesia").
+palavra("bateria").
+palavra("torre").
+palavra("cesta").
+palavra("aguaceiro").
+palavra("motor").
+palavra("dezembro").
+palavra("pasta").
+palavra("radiante").
+palavra("mascarar").
+palavra("computador").
+palavra("dinheiro").
+palavra("recipiente").
+palavra("flutuador").
+palavra("defesa").
+palavra("trabalho").
+palavra("fuga").
+palavra("lugar").
+palavra("magro").
+palavra("concha").
+palavra("sempre").
+palavra("asno").
+palavra("borboleta").
+palavra("pia").
+palavra("lago").
+palavra("atual").
+palavra("infantil").
+palavra("data").
+palavra("pilha").
+palavra("cachos").
+palavra("parente").
+palavra("bater").
+palavra("aposta").
+palavra("oceano").
+palavra("cadeado").
+palavra("flores").
+palavra("chuva").
+palavra("boca").
+palavra("temporada").
+palavra("para").
+palavra("de").
+palavra("com").
+palavra("eu").
+palavra("tu").
+palavra("topo").
+palavra("subir").
+palavra("radical").
+palavra("flauta").
+palavra("hipnotizar").
+palavra("fechado").
+palavra("conflito").
+palavra("gordura").
+palavra("nota").
+palavra("gaiola").
+palavra("selo").
+palavra("liberdade").
+palavra("pico").
+palavra("manteiga").
+palavra("custo").
+palavra("carro").
+palavra("futebol").
+palavra("pulso").
+palavra("filho").
+palavra("cantou").
+palavra("aparar").
+palavra("limpo").
+palavra("antena").
+palavra("cliente").
+palavra("corpo").
+palavra("popular").
+palavra("tela").
+palavra("limpo").
+palavra("teclado").
+palavra("tijolo").
+palavra("chifre").
+palavra("caderno").
+palavra("luz").
+palavra("jubilado").
 
 code(' ',0).
 code('a',1).
@@ -214,6 +214,37 @@ code('ú',100).
 code('û',101).
 
 
+containsOnly(X,Y) :- forall(sub_atom(X,_,1,_,C), sub_atom(Y,_,1,_,C)).
+
+
+delMember(X, [], []) :- !.
+delMember(X, [X|Xs], Y) :- !, delMember(X, Xs, Y).
+delMember(X, [T|Xs], Y) :- !, delMember(X, Xs, Y2), append([T], Y2, Y).
+
+remove_char_aux(S,C,Y):-
+    string_to_list_of_characters(S,Z),
+    delMember(C,Z,X),
+    atomics_to_string(X,Y),
+
+remove_char(S,65,X).
+
+remove_char(S,Code,X):-
+    code(Char,Code),
+    remove_char_aux(S,Char,Y),
+    increment_code(Code,Code2),
+    remove_char(Y,Code2,X).
+
+remove_char(S,Code,X):-
+    code(Char,Code),
+    remove_char_aux(S,Char,Y),!;
+    increment_code(Code,Code2),
+    remove_char(S,Code2,X).
+
+mamaco(S,X):-
+    write(S).
+    remove_char(S,53,X).
+
+
 string_to_list_of_characters(String, Characters) :-
     name(String, Xs),
     maplist( number_to_character,
@@ -263,3 +294,31 @@ caesar(X,Char,T):-
     nonvar(X),
     encoding(X,Char,T),!;
     decoding(X,Char,T).
+
+%quebra_caesar
+
+increment_code(X1,X2):-
+    X2 is X1 + 1.
+
+busca_char_aux(String, Code, Char):-
+    increment_code(Code,Code2),
+    deconversion(Code2,String,T),
+    atomics_to_string(T,Z),
+    palavra(Z),
+    code(Char, Code2).
+
+busca_char(String, Code, Char):-
+    busca_char_aux(String, Code, Char),!;
+    increment_code(Code,Code2),
+    busca_char(String, Code2, Char).
+
+
+
+
+quebra_caesar(String,Char):-
+    string_to_list_of_characters(String,X), 
+    busca_char(X, 0, Char).
+    
+    
+teste(Cu,Result):-
+    re_replace(Cu/g, "", "ababvvvababeeeeababtttttabab", Result).
