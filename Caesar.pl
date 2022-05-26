@@ -240,10 +240,6 @@ remove_char(S,Code,X):-
     increment_code(Code,Code2),
     remove_char(S,Code2,X).
 
-mamaco(S,X):-
-    write(S).
-    remove_char(S,53,X).
-
 
 string_to_list_of_characters(String, Characters) :-
     name(String, Xs),
@@ -318,7 +314,3 @@ busca_char(String, Code, Char):-
 quebra_caesar(String,Char):-
     string_to_list_of_characters(String,X), 
     busca_char(X, 0, Char).
-    
-    
-teste(Cu,Result):-
-    re_replace(Cu/g, "", "ababvvvababeeeeababtttttabab", Result).
