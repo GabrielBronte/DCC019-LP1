@@ -224,7 +224,7 @@ delMember(X, [T|Xs], Y) :- !, delMember(X, Xs, Y2), append([T], Y2, Y).
 remove_char_aux(S,C,Y):-
     string_to_list_of_characters(S,Z),
     delMember(C,Z,X),
-    atomics_to_string(X,Y),
+    atomics_to_string(X,Y).
 
 remove_char(S,65,X).
 
