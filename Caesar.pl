@@ -54,7 +54,7 @@ palavra("parente").
 palavra("bater").
 palavra("aposta").
 palavra("oceano").
-palavra("cadeado").
+palavra("cadeado"). 
 palavra("flores").
 palavra("chuva").
 palavra("boca").
@@ -98,6 +98,15 @@ palavra("chifre").
 palavra("caderno").
 palavra("luz").
 palavra("jubilado").
+palavra("a").
+palavra("ligeira").
+palavra("raposa").
+palavra("marrom").
+palavra("saltou").
+palavra("sobre").
+palavra("o").
+palavra("cachorro").
+palavra("cansado").
 
 palavra('presunto').
 palavra('sobre').
@@ -199,6 +208,15 @@ palavra('chifre').
 palavra('caderno').
 palavra('luz').
 palavra('jubilado').
+palavra('a').
+palavra('ligeira').
+palavra('raposa').
+palavra('marrom').
+palavra('saltou').
+palavra('sobre').
+palavra('o').
+palavra('cachorro').
+palavra('cansado').
 
 code(' ',0).
 code('a',1).
@@ -370,6 +388,22 @@ delMember(X, [], []) :- !.
 delMember(X, [X|Xs], Y) :- !, delMember(X, Xs, Y).
 delMember(X, [T|Xs], Y) :- !, delMember(X, Xs, Y2), append([T], Y2, Y).
 
+organize_string(S,X):-
+    remove_char(S,53,Y),
+    atomics_to_string(X,' ',Y).
+
+increment_code(X1,X2):-
+    X2 is X1 + 1.
+
+search_words([]).
+search_words([H1|T1]):-
+    write(H1),
+    write(' '),
+    write(T1),
+    write(' '),
+    palavra(H1),
+    search_words(T1).
+
 remove_char_aux(S,C,Y):-
     string_to_list_of_characters(S,Z),
     delMember(C,Z,X),
@@ -384,35 +418,18 @@ remove_char(S,Code,X):-
     remove_char(Y,Code2,X).
 
 remove_char(S,Code,X):-
-    code(Char,Code),
-    remove_char_aux(S,Char,X),!;
     increment_code(Code,Code2),
     remove_char(S,Code2,X).
-
-organize_string(S,X):-
-    remove_char(S,53,Y),
-    atomics_to_string(X,' ',Y).
-
-increment_code(X1,X2):-
-    X2 is X1 + 1,
-    write(X2).
-
-search_words([]).
-search_words([H1|T1]):-
-    write([H1|T1]),
-    write(T1),
-    palavra(H1),
-    write(H1).
-
 
 busca_char_aux(String, Code, Char):-
     increment_code(Code,Code2),
     deconversion(Code2,String,T),
     atomics_to_string(T,Z),
-    palavra(Z),
+    organize_string(Z,X),!,
+    search_words(X),
     code(Char, Code2).
 
-busca_char(String,102,Char):-
+busca_char(String,102,Code):-
     !,false.
 
 busca_char(String, Code, Char):-
