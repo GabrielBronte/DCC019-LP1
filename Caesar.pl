@@ -99,6 +99,107 @@ palavra("caderno").
 palavra("luz").
 palavra("jubilado").
 
+palavra('presunto').
+palavra('sobre').
+palavra('sul').
+palavra('fio').
+palavra('carrapato').
+palavra('molde').
+palavra('pulsar').
+palavra('golfinho').
+palavra('mola').
+palavra('varejo').
+palavra('hospital').
+palavra('motel').
+palavra('diario').
+palavra('foto').
+palavra('aderir'). 
+palavra('teste').
+palavra('surpresa').
+palavra('flamenco').
+palavra('laringe').
+palavra('discar').
+palavra('aperitivo').
+palavra('cumprimentar').
+palavra('anestesia').
+palavra('bateria').
+palavra('torre').
+palavra('cesta').
+palavra('aguaceiro').
+palavra('motor').
+palavra('dezembro').
+palavra('pasta').
+palavra('radiante').
+palavra('mascarar').
+palavra('computador').
+palavra('dinheiro').
+palavra('recipiente').
+palavra('flutuador').
+palavra('defesa').
+palavra('trabalho').
+palavra('fuga').
+palavra('lugar').
+palavra('magro').
+palavra('concha').
+palavra('sempre').
+palavra('asno').
+palavra('borboleta').
+palavra('pia').
+palavra('lago').
+palavra('atual').
+palavra('infantil').
+palavra('data').
+palavra('pilha').
+palavra('cachos').
+palavra('parente').
+palavra('bater').
+palavra('aposta').
+palavra('oceano').
+palavra('cadeado').
+palavra('flores').
+palavra('chuva').
+palavra('boca').
+palavra('temporada').
+palavra('para').
+palavra('de').
+palavra('com').
+palavra('eu').
+palavra('tu').
+palavra('topo').
+palavra('subir').
+palavra('radical').
+palavra('flauta').
+palavra('hipnotizar').
+palavra('fechado').
+palavra('conflito').
+palavra('gordura').
+palavra('nota').
+palavra('gaiola').
+palavra('selo').
+palavra('liberdade').
+palavra('pico').
+palavra('manteiga').
+palavra('custo').
+palavra('carro').
+palavra('futebol').
+palavra('pulso').
+palavra('filho').
+palavra('cantou').
+palavra('aparar').
+palavra('limpo').
+palavra('antena').
+palavra('cliente').
+palavra('corpo').
+palavra('popular').
+palavra('tela').
+palavra('limpo').
+palavra('teclado').
+palavra('tijolo').
+palavra('chifre').
+palavra('caderno').
+palavra('luz').
+palavra('jubilado').
+
 code(' ',0).
 code('a',1).
 code('b',2).
@@ -293,12 +394,15 @@ organize_string(S,X):-
     atomics_to_string(X,' ',Y).
 
 increment_code(X1,X2):-
-    X2 is X1 + 1.
+    X2 is X1 + 1,
+    write(X2).
 
 search_words([]).
 search_words([H1|T1]):-
+    write([H1|T1]),
+    write(T1),
     palavra(H1),
-    search_words(T1).
+    write(H1).
 
 
 busca_char_aux(String, Code, Char):-
@@ -308,10 +412,13 @@ busca_char_aux(String, Code, Char):-
     palavra(Z),
     code(Char, Code2).
 
-busca_char(String,102,Char).
+busca_char(String,102,Char):-
+    !,false.
 
 busca_char(String, Code, Char):-
-    busca_char_aux(String, Code, Char),!;
+    busca_char_aux(String,Code,Char).
+
+ busca_char(String, Code, Char):-
     increment_code(Code,Code2),
     busca_char(String, Code2, Char).
     
