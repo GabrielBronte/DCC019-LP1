@@ -65,3 +65,23 @@ vigenere(X,Key,T):-
     nonvar(X),
     encoding(X,Key,T),!;
     decoding(X,Key,T).
+
+increment_code(X1,X2):-
+    X2 is X1 + 1.
+
+decrement_code(X1,X2):-
+    X2 is X1 - 1.
+
+increment_code_up_to_n(String,1,Inicial,Result):-
+    string_concat(String,'b',Result),!.
+
+increment_code_up_to_n(String,N,Inicial,Result):-
+    increment_code(Inicial,Inicial2),
+    string_concat(String,'a',X),
+    decrement_code(N,N2),
+    increment_code_up_to_n(X,N2,Inicial2,Result).
+
+quebra_vigenere(String,N,Final):-
+    increment_code_up_to_n('',N,1,X),
+    write(X),
+    vigenere(String,X,Final).
