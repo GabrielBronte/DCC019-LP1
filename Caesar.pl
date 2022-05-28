@@ -54,8 +54,6 @@ caesar(X,Char,T):-
     encoding(X,Char,T),!;
     decoding(X,Char,T).
 
-%quebra_caesar
-
 delMember(X, [], []) :- !.
 delMember(X, [X|Xs], Y) :- !, delMember(X, Xs, Y).
 delMember(X, [T|Xs], Y) :- !, delMember(X, Xs, Y2), append([T], Y2, Y).
@@ -114,7 +112,3 @@ busca_char(String, Code, Char):-
 quebra_caesar(String,Char):-
     string_to_list_of_characters(String,X),
     busca_char(X, -1, Char).
-
-%organize_string(Z,X),
-%search_words(X),
-
