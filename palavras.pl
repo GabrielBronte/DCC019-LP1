@@ -1,5 +1,13 @@
 :- dynamic(palavra/1).
 
+writefacts(Palavra):-
+    open('palavras.pl',append,Out),
+    string_concat('\npalavra(''', Palavra, String3),
+    string_concat(String3, ''').', String4),
+    write(Out, String4),
+    close(Out).  
+
+
 palavra('presunto').
 palavra('sobre').
 palavra('sul').
@@ -109,3 +117,4 @@ palavra('sobre').
 palavra('o').
 palavra('cachorro').
 palavra('cansado').
+palavra('testando').

@@ -1,8 +1,6 @@
 
-:- consult('palavras').
+:- include('palavras').
 :- consult('code').
-
-
 
 string_to_list_of_characters(String, Characters) :-
     name(String, Xs),
@@ -17,21 +15,21 @@ string2code([H1|T1],[H2|T2]):-
     code(H1,H2),
     string2code(T1,T2).
 
-sum_char_code(Code,[],[]).
+sum_char_code(_,[],[]).
 sum_char_code(Code,[H1|T1],[H2|T2]):-
-    string2code([H1|T1],[H3|T3]),
+    string2code([H1|T1],[H3|_]),
     H2 is mod(H3+Code,102),
     sum_char_code(Code,T1,T2).
 
-conversion(Code,[],[]).
+conversion(_,[],[]).
 conversion(Code,[H1|T1],[H2|T2]):-
-    sum_char_code(Code, [H1|T1],[H3|T3]),
+    sum_char_code(Code, [H1|T1],[H3|_]),
     code(H2,H3),
     conversion(Code,T1,T2).
 
-deconversion(Code,[],[]).
+deconversion(_,[],[]).
 deconversion(Code,[H1|T1],[H2|T2]):-
-    sub_char_code(Code, [H1|T1],[H3|T3]),
+    sub_char_code(Code, [H1|T1],[H3|_]),
     code(H2,H3),
     deconversion(Code,T1,T2).
 
@@ -43,9 +41,9 @@ decoding(String,Char,R):-
     string_to_list_of_characters(R,X),code(Char,Code),
     deconversion(Code,X,Y), atomics_to_string(Y,String).
 
-sub_char_code(Code,[],[]).
+sub_char_code(_,[],[]).
 sub_char_code(Code,[H1|T1],[H2|T2]):-
-    string2code([H1|T1],[H3|T3]),
+    string2code([H1|T1],[H3|_]),
     H2 is mod(H3-Code,102),
     sub_char_code(Code,T1,T2).
 
@@ -54,7 +52,7 @@ caesar(X,Char,T):-
     encoding(X,Char,T),!;
     decoding(X,Char,T).
 
-delMember(X, [], []) :- !.
+delMember(_, [], []) :- !.
 delMember(X, [X|Xs], Y) :- !, delMember(X, Xs, Y).
 delMember(X, [T|Xs], Y) :- !, delMember(X, Xs, Y2), append([T], Y2, Y).
 
@@ -99,7 +97,7 @@ busca_char_aux(String, Code, Char):-
     search_words(X),
     code(Char, Code2).
 
-busca_char(String,102,Code):-
+busca_char(_,102,_):-
     !,false.
 
 busca_char(String, Code, Char):-

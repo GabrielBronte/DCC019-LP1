@@ -15,39 +15,38 @@ string2code([H1|T1],[H2|T2]):-
     code(H1,H2),
     string2code(T1,T2).
 
-sum_char_code(Code,[],[]).
+sum_char_code(_,[],[]).
 sum_char_code(Code,[H1|T1],[H2|T2]):-
-    string2code([H1|T1],[H3|T3]),
+    string2code([H1|T1],[H3|_]),
     H2 is mod(H3+Code,102),
     sum_char_code(Code,T1,T2).
 
-sub_char_code(Code,[],[]).
+sub_char_code(_,[],[]).
 sub_char_code(Code,[H1|T1],[H2|T2]):-
-    string2code([H1|T1],[H3|T3]),
+    string2code([H1|T1],[H3|_]),
     H2 is mod(H3-Code,102),
     sub_char_code(Code,T1,T2).
 
-conversion([],C,[],[]).
-conversion([KH1|KT1],C,[],[]).
-
+conversion([],_,[],[]).
+conversion([_|_],_,[],[]).
 conversion([],C,[H1|T1],[H2|T2]):-
     conversion(C,C,[H1|T1],[H2|T2]).
 
 conversion([KH1|KT1],C,[H1|T1],[H2|T2]):-
     code(KH1,Code),
-    sum_char_code(Code, [H1|T1],[H3|T3]),
+    sum_char_code(Code, [H1|T1],[H3|_]),
     code(H2,H3),
     conversion(KT1,C,T1,T2).
 
-deconversion([],C,[],[]).
-deconversion([KH1|KT1],C,[],[]).
+deconversion([],_,[],[]).
+deconversion([_|_],_,[],[]).
 
 deconversion([],C,[H1|T1],[H2|T2]):-
     deconversion(C,C,[H1|T1],[H2|T2]).
 
 deconversion([KH1|KT1],C,[H1|T1],[H2|T2]):-
     code(KH1,Code),
-    sub_char_code(Code, [H1|T1],[H3|T3]),
+    sub_char_code(Code, [H1|T1],[H3|_]),
     code(H2,H3),
     deconversion(KT1,C,T1,T2).
 
