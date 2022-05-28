@@ -72,16 +72,55 @@ increment_code(X1,X2):-
 decrement_code(X1,X2):-
     X2 is X1 - 1.
 
-increment_code_up_to_n(String,1,Inicial,Result):-
-    string_concat(String,'b',Result),!.
+increment_code_up_to_n(String,1,String).
 
-increment_code_up_to_n(String,N,Inicial,Result):-
-    increment_code(Inicial,Inicial2),
-    string_concat(String,'a',X),
-    decrement_code(N,N2),
-    increment_code_up_to_n(X,N2,Inicial2,Result).
+increment_code_up_to_n(String,N,Result):-
+    string_concat(String, ' ', R),
+    decrement_code(N, Aux),
+    increment_code_up_to_n(R, Aux, Result).
 
 quebra_vigenere(String,N,Final):-
-    increment_code_up_to_n('',N,1,X),
-    write(X),
-    vigenere(String,X,Final).
+    increment_code_up_to_n(' ',N,X),
+    string_to_list_of_characters(X,L),
+    search_key(L,Y),
+    vigenere(String,Y,Final),!;
+    quebra_vigenere().
+
+increment_char(Code1,Code2):-
+    Code2 is Code1 + 1. 
+
+
+increment_string([], _).
+
+increment_string([H1|T1], [H2|T2]):-
+    ((H1 >= 3), 
+    H2 is 0,
+    increment_string(T1,T2)).
+
+increment_string([H1|T1], [H2|T2]):-
+    ((H1 < 3), 
+    H2 is H1 + 1,
+    copy(T1,T2)).
+    
+
+
+ search_key(List,L):-
+    string2code(List,X),
+    reverse(X,Z),
+    increment_string(Z,V),
+    reverse(V,T),
+    string2code(Y,T),
+    atomics_to_string(Y,L).
+
+reverse([],Z,Z).
+
+reverse([H|T],Z,Acc) :- reverse(T,Z,[H|Acc]).
+
+copy(L,R) :- accCp(L,R).
+
+accCp([],[]).
+accCp([H|T1],[H|T2]) :- accCp(T1,T2).
+
+
+
+
