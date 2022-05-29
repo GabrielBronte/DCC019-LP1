@@ -129,3 +129,5 @@ palavra('vasco').
 palavra('bronte').
 palavra('palmeiras').
 palavra("bronte").
+palavra('flamengo').
+palavra('campeao').

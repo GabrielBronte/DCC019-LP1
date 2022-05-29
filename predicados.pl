@@ -13,13 +13,13 @@ search_words([H1|T1]):-
 sum_char_code(_,[],[]).
 sum_char_code(Code,[H1|T1],[H2|T2]):-
     string2code([H1|T1],[H3|_]),
-    H2 is mod(H3+Code,82),
+    H2 is mod(H3+Code,76),
     sum_char_code(Code,T1,T2).
 
 sub_char_code(_,[],[]).
 sub_char_code(Code,[H1|T1],[H2|T2]):-
     string2code([H1|T1],[H3|_]),
-    H2 is mod(H3-Code,82),
+    H2 is mod(H3-Code,76),
     sub_char_code(Code,T1,T2).
 
 string_to_list_of_characters(String, Characters) :-
