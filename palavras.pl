@@ -1,5 +1,8 @@
 :- dynamic(palavra/1).
 
+deletefacts(Palavra):-
+    retract(palavra(Palavra)).
+
 writefacts(Palavra):-
     palavra(Palavra),!.
     

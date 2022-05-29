@@ -2,9 +2,6 @@
 :- consult('code').
 :- consult('predicados').
 
-
-
-
 conversion([],_,[],[]).
 conversion([_|_],_,[],[]).
 conversion([],C,[H1|T1],[H2|T2]):-
@@ -28,16 +25,13 @@ deconversion([KH1|KT1],C,[H1|T1],[H2|T2]):-
     code(H2,H3),
     deconversion(KT1,C,T1,T2).
 
-
 encoding(String,Key,R):-
     string_to_list_of_characters(String,X),string_to_list_of_characters(Key,K),
     conversion(K,K,X,Y), atomics_to_string(Y,R).
 
-
 decoding(String,Key,R):-
     string_to_list_of_characters(R,X),string_to_list_of_characters(Key,K),
     deconversion(K,K,X,Y), atomics_to_string(Y,String).
-
 
 vigenere(X,Key,T):-
     nonvar(X),
@@ -45,7 +39,6 @@ vigenere(X,Key,T):-
     decoding(X,Key,T).
 
 increment_code_up_to_n(String,1,String).
-
 increment_code_up_to_n(String,N,Result):-
     string_concat(String, ' ', R),
     decrement_code(N, Aux),
@@ -54,16 +47,13 @@ increment_code_up_to_n(String,N,Result):-
 increment_char(Code1,Code2):-
     Code2 is Code1 + 1. 
 
-
 increment_string([], _).
-
 increment_string([H1|T1], [H2|T2]):-
-    ((H1 >= 102), 
+    ((H1 >= 76), 
     H2 is 0,
     increment_string(T1,T2)).
-
 increment_string([H1|T1], [H2|T2]):-
-    ((H1 < 102), 
+    ((H1 < 76), 
     H2 is H1 + 1,
     copy(T1,T2)).
     
@@ -88,7 +78,6 @@ teste(String, Key, Final):-
     search_key(Key,L),
     string_to_list_of_characters(L,Key2),
     teste(String,Key2,Final).
-
 
 quebra_vigenere(String,N,Final):-
     increment_code_up_to_n(' ',N,X),

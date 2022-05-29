@@ -13,13 +13,13 @@ search_words([H1|T1]):-
 sum_char_code(_,[],[]).
 sum_char_code(Code,[H1|T1],[H2|T2]):-
     string2code([H1|T1],[H3|_]),
-    H2 is mod(H3+Code,102),
+    H2 is mod(H3+Code,82),
     sum_char_code(Code,T1,T2).
 
 sub_char_code(_,[],[]).
 sub_char_code(Code,[H1|T1],[H2|T2]):-
     string2code([H1|T1],[H3|_]),
-    H2 is mod(H3-Code,102),
+    H2 is mod(H3-Code,82),
     sub_char_code(Code,T1,T2).
 
 string_to_list_of_characters(String, Characters) :-
@@ -54,13 +54,10 @@ organize_string(S,X):-
     remove_char(S,53,Y),
     atomics_to_string(X,' ',Y).
 
-
-
 remove_char_aux(S,C,Y):-
     string_to_list_of_characters(S,Z),
     delMember(C,Z,X),
     atomics_to_string(X,Y).
-
 
 remove_char(S,65,S).
 
