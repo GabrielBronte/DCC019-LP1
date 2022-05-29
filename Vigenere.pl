@@ -81,10 +81,20 @@ increment_code_up_to_n(String,N,Result):-
 
 quebra_vigenere(String,N,Final):-
     increment_code_up_to_n(' ',N,X),
-    string_to_list_of_characters(X,L),
-    search_key(L,Y),
-    vigenere(String,Y,Final),!;
-    quebra_vigenere().
+    string_to_list_of_characters(X,Key),
+    vrau(String, Key, Final).
+
+vrau(String, Key,Final):-
+    atomics_to_string(Key,X),
+    vigenere(String2,X,String),
+    write(String2),
+    organize_string(String2,Z),
+    search_words(Z).
+
+vrau(String,Key,Final):-
+    search_key(Key,Y),
+    string_to_list_of_characters(Y,List),
+    vrau(String,List,Final).
 
 increment_char(Code1,Code2):-
     Code2 is Code1 + 1. 
@@ -102,8 +112,6 @@ increment_string([H1|T1], [H2|T2]):-
     H2 is H1 + 1,
     copy(T1,T2)).
     
-
-
  search_key(List,L):-
     string2code(List,X),
     reverse(X,Z),
@@ -124,3 +132,32 @@ accCp([H|T1],[H|T2]) :- accCp(T1,T2).
 
 
 
+organize_string(S,X):-
+    remove_char(S,53,Y),
+    atomics_to_string(X,' ',Y).
+
+remove_char_aux(S,C,Y):-
+    string_to_list_of_characters(S,Z),
+    delMember(C,Z,X),
+    atomics_to_string(X,Y).
+
+remove_char(S,65,S).
+
+remove_char(S,Code,X):-
+    code(Char,Code),
+    remove_char_aux(S,Char,Y),
+    increment_code(Code,Code2),
+    remove_char(Y,Code2,X).
+
+remove_char(S,Code,X):-
+    increment_code(Code,Code2),
+    remove_char(S,Code2,X).
+
+delMember(_, [], []) :- !.
+delMember(X, [X|Xs], Y) :- !, delMember(X, Xs, Y).
+delMember(X, [T|Xs], Y) :- !, delMember(X, Xs, Y2), append([T], Y2, Y).
+
+search_words([]).
+search_words([H1|T1]):-
+    palavra(H1),
+    search_words(T1).

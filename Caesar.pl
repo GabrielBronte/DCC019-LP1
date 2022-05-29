@@ -65,10 +65,6 @@ increment_code(X1,X2):-
 
 search_words([]).
 search_words([H1|T1]):-
-    write(H1),
-    write(' '),
-    write(T1),
-    write(' '),
     palavra(H1),
     search_words(T1).
 
