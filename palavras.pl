@@ -78,8 +78,6 @@ palavra('de').
 palavra('com').
 palavra('eu').
 palavra('tu').
-palavra(eu).
-palavra(tu).
 palavra('topo').
 palavra('subir').
 palavra('radical').
@@ -128,8 +126,3 @@ palavra('vasco').
 palavra('bronte').
 palavra('palmeiras').
 palavra("bronte").
-
-palavra('campeao').
-palavra(campeao).
-palavra(flamengo).
-palavra('flamengo').
