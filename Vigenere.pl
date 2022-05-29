@@ -51,23 +51,6 @@ increment_code_up_to_n(String,N,Result):-
     decrement_code(N, Aux),
     increment_code_up_to_n(R, Aux, Result).
 
-vrau(String, Key,Final):-
-    atomics_to_string(Key,X),
-    vigenere(String2,X,String),
-    organize_string(String2,Z),!,
-    search_words(Z).
-
-vrau(String, Key,Final):-
-    write(Key).
-
-
-    
-
-%vrau(String,Key,Final):-
-%search_key(Key,Y),
-    %string_to_list_of_characters(Y,List),
-    %vrau(String,List,Final).
-
 increment_char(Code1,Code2):-
     Code2 is Code1 + 1. 
 
@@ -75,12 +58,12 @@ increment_char(Code1,Code2):-
 increment_string([], _).
 
 increment_string([H1|T1], [H2|T2]):-
-    ((H1 >= 3), 
+    ((H1 >= 102), 
     H2 is 0,
     increment_string(T1,T2)).
 
 increment_string([H1|T1], [H2|T2]):-
-    ((H1 < 3), 
+    ((H1 < 102), 
     H2 is H1 + 1,
     copy(T1,T2)).
     
@@ -92,10 +75,26 @@ search_key(List,L):-
     string2code(Y,T),
     atomics_to_string(Y,L).
 
+vrau(String, Key,Final):-
+    atomics_to_string(Key,X),
+    vigenere(String2,X,String),
+    organize_string(String2,Final),!,
+    search_words(Final).
+
+teste(String, Key, Final):-
+    vrau(String, Key,Final).
+
+teste(String, Key, Final):-
+    search_key(Key,L),
+    string_to_list_of_characters(L,Key2),
+    teste(String,Key2,Final).
+
+
 quebra_vigenere(String,N,Final):-
     increment_code_up_to_n(' ',N,X),
-    string_to_list_of_characters(X,Key),
-    vrau(String, Key, Final).
+    string_to_list_of_characters(X,Key),!,
+    teste(String, Key, Final).
+
 
 
 
