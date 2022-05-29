@@ -49,11 +49,11 @@ increment_char(Code1,Code2):-
 
 increment_string([], _).
 increment_string([H1|T1], [H2|T2]):-
-    ((H1 >= 76), 
+    ((H1 >= 75), 
     H2 is 0,
     increment_string(T1,T2)).
 increment_string([H1|T1], [H2|T2]):-
-    ((H1 < 76), 
+    ((H1 < 75), 
     H2 is H1 + 1,
     copy(T1,T2)).
     

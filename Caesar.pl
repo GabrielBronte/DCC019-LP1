@@ -35,7 +35,7 @@ busca_char_aux(String, Code, Char):-
     search_words(X),
     code(Char, Code2).
 
-busca_char(_,77,_):-
+busca_char(_,76,_):-
     !,false.
 
 busca_char(String, Code, Char):-
