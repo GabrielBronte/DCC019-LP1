@@ -5,7 +5,6 @@ deletefacts(Palavra):-
 
 writefacts(Palavra):-
     palavra(Palavra),!.
-    
 writefacts(Palavra):-
     open('palavras.pl',append,Out),
     string_concat('\npalavra(''', Palavra, String3),
@@ -13,7 +12,6 @@ writefacts(Palavra):-
     write(Out, String4),
     assertz(palavra(Palavra)),
     close(Out).  
-
 
 palavra('presunto').
 palavra('sobre').
