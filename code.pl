@@ -1,3 +1,6 @@
+%Nome: Guilherme Marques - 201835008
+%Gabriel Bronte - 201835002
+
 code(' ',0).
 code('a',1).
 code('b',2).

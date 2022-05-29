@@ -1,3 +1,6 @@
+%Nome: Guilherme Marques - 201835008
+%Gabriel Bronte - 201835002
+
 :- dynamic(palavra/1).
 
 deletefacts(Palavra):-
