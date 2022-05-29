@@ -65,24 +65,24 @@ search_key(List,L):-
     string2code(Y,T),
     atomics_to_string(Y,L).
 
-vrau(String, Key,Final):-
+check_words(String, Key,Final):-
     atomics_to_string(Key,X),
     vigenere(String2,X,String),
     organize_string(String2,Final),!,
     search_words(Final).
 
-teste(String, Key, Final):-
-    vrau(String, Key,Final).
+quebra_vigenere_aux(String, Key, Final):-
+    check_words(String, Key,Final).
 
-teste(String, Key, Final):-
+quebra_vigenere_aux(String, Key, Final):-
     search_key(Key,L),
     string_to_list_of_characters(L,Key2),
-    teste(String,Key2,Final).
+    quebra_vigenere_aux(String,Key2,Final).
 
 quebra_vigenere(String,N,Final):-
     increment_code_up_to_n(' ',N,X),
     string_to_list_of_characters(X,Key),!,
-    teste(String, Key, Final).
+    quebra_vigenere_aux(String, Key, Final).
 
 
 
